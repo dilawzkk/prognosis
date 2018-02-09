@@ -1,0 +1,17 @@
+Metadata-Version: 1.1
+Name: magpie
+Version: 2.0
+Summary: Automatic text classification tool
+Home-page: https://github.com/inspirehep/magpie
+Author: Jan Stypka
+Author-email: jan.stypka@cern.ch
+License: MIT
+Description-Content-Type: UNKNOWN
+Description: UNKNOWN
+Keywords: multi-label classification nlp neural networks deep learning
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Topic :: Text Processing
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 3

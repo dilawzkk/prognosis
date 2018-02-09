@@ -1,0 +1,6 @@
+import csv
+disease = []
+for d in csv.DictReader(open('disease.csv'), delimiter='\t'):
+    disease.append(str(d[0]))
+
+print disease

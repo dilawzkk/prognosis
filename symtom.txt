@@ -1,0 +1,8 @@
+headache
+chestpain
+fever
+nausea
+migraine
+bodypain
+dizziness
+nausea
