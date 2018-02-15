@@ -7,11 +7,18 @@ MIN_WORD_COUNT = 5
 WORD2VEC_CONTEXT = 5
 
 # Models
-NN_ARCHITECTURE = 'rnn'
+NN_ARCHITECTURE = 'cnn'
 
 # Training parameters
-BATCH_SIZE = 128
+BATCH_SIZE = 64
 EPOCHS = 1
 
 # Number of tokens to save from the abstract, zero padded
 SAMPLE_LENGTH = 200
+
+'''
+
+sgd @ rnn,cnn
+hid lay @rnn def 256
+'''
+
