@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Prognosis</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+ <link rel="stylesheet"
+  href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+<!--<link rel="stylesheet"
+  href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">-->
+  <link rel="stylesheet" type="text/css" href="style1eg.css" media="screen" />
+<script type="text/javascript"
+  src="http://code.jquery.com/jquery.min.js"></script>
+<script
+  src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js">
+   
+   $(function () {
+        var progress = $("#pb-modalreglog-progressbar").shieldProgressBar({
+            value: 0
+        }).swidget();
+
+        $('#inputEmail').change(function () {
+            if ($('#inputEmail').val().length > 1) {
+                progress.value(progress.value() + 15);
+            } else {
+                progress.value(progress.value() - 15);
+            }
+        });
+
+        $('#inputPws').change(function () {
+            if ($('#inputPws').val().length > 1) {
+                progress.value(progress.value() + 15);
+            } else {
+                progress.value(progress.value() - 15);
+            }
+        });
+
+        $('#inputConfirmPws').change(function () {
+            if ($('#inputConfirmPws').val().length > 1) {
+                progress.value(progress.value() + 15);
+            } else {
+                progress.value(progress.value() - 15);
+            }
+        });
+
+        $('#countries').change(function () {
+            if ($('#countries').val().length > 1) {
+                progress.value(progress.value() + 15);
+            } else {
+                progress.value(progress.value() - 15);
+            }
+        });
+
+        $('#age').change(function () {
+            if ($('#age').val().length > 1) {
+                progress.value(progress.value() + 15);
+            } else {
+                progress.value(progress.value() - 15);
+            }
+        });
+
+        $('#ch').change(function () {
+            if ($('input[name="chs"]:checked').length > 0) {
+                progress.value(progress.value() + 25);
+            } else {
+                progress.value(progress.value() - 25);
+            }
+        });
+
+        $("#age").shieldMaskedTextBox({
+            enabled: true,
+            mask: "00/00/0000",
+            value: "19/03/1032"
+        });
+    }) 
+
+
+
+
+
+
+
+
+
+  </script>
+
+
+<!--[if IE 6]>
+<link rel="stylesheet" type="text/css" href="iecss.css" />
+<![endif]-->
+</head>
+<body>
+<div id="main_container">
+  <div class="header">
+    <div id="logo"><a href="#"><img src="images/logo.png" alt="" width="190" height="54" border="0" /></a></div>
+    <div class="right_header">
+
+      <div class="top_menu"> <a href="#login-modal" class="login" data-toggle="modal">login</a>
+
+        
+        <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+        <div class="loginmodal-container">
+          <h3>Login to Your Account</h3><br>
+          <form>
+          <input type="text" name="user" placeholder="Username">
+          <input type="password" name="pass" placeholder="Password">
+          <input type="submit" name="login" class="login loginmodal-submit" value="Login">
+          </form>
+          
+          <div class="login-help">
+           - <a href="#">Forgot Password?</a>
+          </div>
+        </div>
+      </div>
+      </div>
+
+
+      <a href="#modal-registration" class="sign_up" data-toggle="modal">signup</a> </div>
+
+        <div class="modal fade" id="modal-registration" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h3 class="modal-title" id="myModalLabel">Register to Prognosis</h3>
+                        </div>
+                        <div class="modal-body">
+                            <form class="pb-modalreglog-form-reg">
+                                <div class="form-group">
+                                    <div id="pb-modalreglog-progressbar"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Name</label>
+                                    <div class="input-group pb-modalreglog-input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="country">Country</label>
+                                    <div class="input-group pb-modalreglog-input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-globe"></span></span>
+                                        <input type="text" class="form-control" id="countries" placeholder="Country">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email address</label>
+                                    <div class="input-group pb-modalreglog-input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <div class="input-group pb-modalreglog-input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                                        <input type="password" class="form-control" id="inputPws" placeholder="Password">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmpassword">Confirm password</label>
+                                    <div class="input-group pb-modalreglog-input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                                        <input type="password" class="form-control" id="inputConfirmPws" placeholder="Confirm Password">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="age">Age</label>
+                                    <div class="input-group pb-modalreglog-input-group">
+                                        <input id="age">
+                                    </div>
+                                </div>
+                              
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Sign up</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+      <div id="menu">
+        <ul>
+          <li><a class="current" href="#">Home</a></li>
+          <li><a href="#">About Us</a></li>
+          <!--<li><a href="#">Services</a></li>-->
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="middle_box">
+    <div class="middle_box_content"><img src="images/banner_content.jpg" alt="" /></div>
+  </div>
+  <div class="pattern_bg">
+    <div class="pattern_box">
+      <div class="pattern_box_icon"><img src="images/icon1.png" alt="" width="70" height="112" /></div>
+      <div class="pattern_content">
+        <h1>My <span class="blue">Medicine</span></h1>
+        <p class="pat"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+      </div>
+    </div>
+    <div class="pattern_box">
+      <div class="pattern_box_icon"><img src="images/icon2.png" alt="" width="70" height="112" /></div>
+      <div class="pattern_content">
+        <h1>Search <span class="blue"> Treatments</span></h1>
+        <p class="pat"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+      </div>
+    </div>
+  </div>
+  <div id="main_content">
+    <div class="box_content">
+      <div class="box_title">
+        <div class="title_icon"><img src="images/mini_icon1.gif" alt="" /></div>
+        <h2>My <span class="dark_blue">Events</span></h2>
+      </div>
+      <div class="box_text_content"> <img src="images/calendar.gif" alt="" class="box_icon" />
+        <div class="box_text"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </div>
+        <a href="#" class="details">+ details</a> </div>
+      <div class="box_text_content"> <img src="images/calendar.gif" alt="" class="box_icon" />
+        <div class="box_text"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </div>
+        <a href="#" class="details">+ details</a> </div>
+    </div>
+    <div class="box_content">
+      <div class="box_title">
+        <div class="title_icon"><img src="images/mini_icon2.gif" alt="" /></div>
+        <h2>My <span class="dark_blue"> Goals</span></h2>
+      </div>
+      <div class="box_text_content"> <img src="images/checked.gif" alt="" class="box_icon" />
+        <div class="box_text"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </div>
+        <a href="#" class="details">+ details</a> </div>
+      <div class="box_text_content"> <img src="images/checked.gif" alt="" class="box_icon" />
+        <div class="box_text"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </div>
+        <a href="#" class="details">+ details</a> </div>
+    </div>
+    <div class="box_content">
+      <div class="box_title">
+        <div class="title_icon"><img src="images/mini_icon3.gif" alt="" /></div>
+        <h2>My <span class="dark_blue">Sleep</span></h2>
+      </div>
+      <div class="box_text_content"> <img src="images/checked.gif" alt="" class="box_icon" />
+        <div class="box_text"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </div>
+        <a href="#" class="details">+ details</a> </div>
+      <div class="box_text_content"> <img src="images/checked.gif" alt="" class="box_icon" />
+        <div class="box_text"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </div>
+        <a href="#" class="details">+ details</a> </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div id="footer">
+    <!--<div class="copyright"> <img src="images/footer_logo.gif" alt="" /> </div>-->
+    <div class="center_footer">&copy; Prognosis 2018. All Rights Reserved</div>
+    
+  </div>
+</div>
+</body>
+</html>
