@@ -1,8 +1,23 @@
-headache
 fever
-drowsiness
+dizziness
+vomiting
 
-fatigue
+
+hypotension
 
 
-cough
+
+lightheadedness
+
+
+
+
+
+
+
+
+
+headache
+
+
+

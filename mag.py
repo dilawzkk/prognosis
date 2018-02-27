@@ -2,11 +2,11 @@ from magpie import Magpie
 
 import csv
 magpie = Magpie()
-magpie.init_word_vectors('Data/Directory', vec_dim=400)
-magpie.train_word2vec('Data/Directory', vec_dim=400)
+#magpie.init_word_vectors('Data/Directory', vec_dim=400)
+#magpie.train_word2vec('Data/Directory', vec_dim=400)
 
 
-magpie.fit_scaler('Data/Directory')
+#magpie.fit_scaler('Data/Directory')
 diseases = []
 
 for d in csv.reader(open('disease.csv',"rb")):
@@ -19,13 +19,13 @@ for d in csv.reader(open('disease.csv',"rb")):
     #counts.append(int(d['Counts']))
 
 #print ('Counts = ', counts)
-magpie.train('Data/Directory', diseases , epochs=50)
+#magpie.train('Data/Directory', diseases , epochs=10)
 
 
 
-magpie.save_word2vec_model('ModelSave/my/embeddings/here')
-magpie.save_scaler('ModelSave/my/scaler/here', overwrite=True)
-magpie.save_model('ModelSave/my/model/here.h5')
+#magpie.save_word2vec_model('ModelSave/my/embeddings/here')
+#magpie.save_scaler('ModelSave/my/scaler/here', overwrite=True)
+#magpie.save_model('ModelSave/my/model/here.h5')
 magpie = Magpie(
    keras_model='ModelSave/my/model/here.h5',
    word2vec_model='ModelSave/my/embeddings/here',
