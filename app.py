@@ -1,16 +1,151 @@
 from flask import Flask, flash, redirect, render_template, request, session, abort, url_for
 import models as dbHandler
 import os
+import nltk
+import io
+import operator
+from magpie import Magpie
+import csv
+magpie = Magpie()
+import speech_recognition as sr
 app = Flask(__name__)
 @app.route("/")
 def home():
 	if not session.get('logged_in'):
 		return redirect(url_for('login'))
 	else:
-		 return redirect(url_for('chat'))#first page to display
+         chatlist=[['sys','Hi,I am Prognosis'],['sys','Let us hear your problems']]
+         session['chatlist']=chatlist
+         return redirect(url_for('chat'))#first page to display
 @app.route("/chat")
 def chat():
- return render_template('chat.html')
+ 
+ chatlist=session.get('chatlist')
+ return render_template('chat.html',chatlist=chatlist)
+
+
+@app.route("/speech")
+def speech():
+ 
+ 
+ # Record Audio
+ r = sr.Recognizer()
+ with sr.Microphone() as source:
+    print("Say something!")
+    audio = r.listen(source)
+    print("Finished recording")
+ 
+ # Speech recognition using Google Speech Recognition
+ try:
+    # for testing purposes, we're just using the default API key
+    # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY")`
+    # instead of `r.recognize_google(audio)`
+    #speech=r.recognize_google(audio))
+    chatlist=session.get('chatlist')
+    print("You said: " + r.recognize_google(audio))
+    speak=str(r.recognize_google(audio))
+    speak.lstrip('u')
+    chat=['user',speak]
+    chatlist.append(chat)
+    print chatlist
+    
+    
+    noun=nltk.word_tokenize(speak)
+    print noun
+    f=open('medterm.txt','w')
+
+    for i in range(len(noun)):
+      with open('symtom.txt','r') as f1:
+        for line in f1:
+          for word in line.split():
+    	    if noun[i] == word :
+    		  f.write(noun[i]+'\n')
+    session['chatlist']=chatlist
+    return redirect(url_for('prediction'))
+ except sr.UnknownValueError:
+    print("Google Speech Recognition could not understand audio")
+ except sr.RequestError as e:
+    print("Could not request results from Google Speech Recognition service; {0}".format(e))
+
+
+@app.route("/prediction",methods=['POST','GET'])
+def prediction():
+    if request.method=='POST':
+       message=request.form['message']
+       symlist=message.split(',')
+       data = []
+       with open('medterm.txt','a') as myfile:
+            for symptom in symlist:
+                myfile.write(symptom + "\n")
+       with open('medterm.txt','r') as myfile:
+            for i in myfile.readlines():
+                data.append(i)
+    diseases = []
+
+    for d in csv.reader(open('disease.csv',"rb")):
+	    d_tra=str(d[0:1])
+	    d_tra=d_tra[2:-2]
+	    diseases.append(d_tra)
+    magpie = Magpie(
+    keras_model='ModelSave/my/model/here.h5',
+    word2vec_model='ModelSave/my/embeddings/here',
+    scaler='ModelSave/my/scaler/here',
+    labels=diseases
+    )
+    dictionary={}
+    dict1={'influenza':0}
+    data = []
+    with io.open('medterm.txt', encoding='latin-1') as myfile:
+      for i in myfile.readlines():
+        data.append(i)
+ 
+
+    for i in range(len(data)):
+        dictionary= magpie.predict_from_text(data[i])
+        dictionary=dict(dictionary)
+        #dictionary.sort() 
+        dict1 = {key: dict1.get(key, 0) + dictionary.get(key, 0) for key in set(dict1) | set(dictionary)}
+    #sorted_dict1 = sorted(dict1.items(), key=operator.itemgetter(0),reverse=True)
+    items = [(v, k) for k, v in dict1.items()]
+    items.sort()
+    items.reverse()
+    items = [(k, v) for v, k in items] 
+    print items
+    chatlist=session.get('chatlist')
+    if request.method=='POST':
+        output=[list(items[0]),list(items[1]),list(items[2])]
+        outitem=['sys','you might have']
+        chatlist.append(outitem)
+        outitem=['sys',output[0][0]]
+        chatlist.append(outitem)
+        outitem=['sys',output[1][0]]
+        chatlist.append(outitem)
+        outitem=['sys',output[2][0]]
+        chatlist.append(outitem)
+    import random 
+    for (dis,v) in items[:5]:
+     dislist=[]
+     diseaselist=[]
+     with open("diseasefiles/%02s.csv"%dis) as csvfile:
+         for row in csvfile:
+            dislist.append(row)
+         diseaselist=list(set(dislist)-set(data))
+         #print diseaselist
+         sym=[]   
+         for i in range(3):
+          secure_random = random.SystemRandom()
+          sym.append(secure_random.choice(diseaselist))
+            
+         chatlist.append(['sys',"Do you have ?\n" + sym[0] + sym[1] + sym[2]])
+         session['chatlist']=chatlist
+         return render_template('chat.html',chatlist=chatlist)
+    
+        
+         
+    
+            
+	
+
 @app.route("/register",methods=['POST','GET'])
 def register():
 	if request.method=='POST':
@@ -20,9 +155,11 @@ def register():
         email=request.form['email']
         if password1==password2:
             dbHandler.insertUser(username, password1,email)
-            return render_template('index.html')
+            return render_template('index.html')                                                        
    	else:
    		return render_template('register.html')
+
+
 
 @app.route("/login",methods=['POST', 'GET'])
 def login():
