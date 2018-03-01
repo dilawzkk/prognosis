@@ -1,8 +1,35 @@
-headache
-chestpain
+worry
+feeling suicidal
+suicidal
+sleeplessness
+feeling hopeless
+irritable mood
+tremor
+blackout
+weepiness
+has religious belief
+nervousness
+hallucinations visual
+formication
+difficulty
+chest pain
+patient non compliance
+agitation
+palpitation
+hallucinations auditory
+mood depressed
+hot flush
+pain
+consciousness clear
+nightmare
+stomach ache
 fever
-nausea
+headache
+cold
+cough
 migraine
-bodypain
+vomiting
 dizziness
 nausea
+sweat
+swelling

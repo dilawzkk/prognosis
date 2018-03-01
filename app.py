@@ -1,3 +1,4 @@
+from datetime import timedelta
 from flask import Flask, flash, redirect, render_template, request, session, abort, url_for
 import models as dbHandler
 import os
@@ -14,14 +15,53 @@ def home():
 	if not session.get('logged_in'):
 		return redirect(url_for('login'))
 	else:
-         chatlist=[['sys','Hi,I am Prognosis'],['sys','Let us hear your problems']]
+         chatlist=[['sys','Hi,I am Prognosis'],['sysm','Let us hear your problems']]
          session['chatlist']=chatlist
+        
          return redirect(url_for('chat'))#first page to display
+
+
 @app.route("/chat")
 def chat():
- 
+ i=0
  chatlist=session.get('chatlist')
- return render_template('chat.html',chatlist=chatlist)
+ username=session.get('username')
+ return render_template('chat.html',chatlist=chatlist,username=username)
+
+
+@app.route("/testreports",methods=['POST','GET'])
+def testreports():
+ if request.method=='POST':
+    select=request.form['showform']
+    
+    if select=='bloodpressure':
+        print "bcd"
+        sys=request.form['syst']
+        dis=request.form['dias']
+        username=session.get('username')
+        dbHandler.insertbp(username,sys,dis)
+        return render_template('testreports.html')    
+    if select=='sugartest':
+        fbs=request.form['fbs']
+        ppbs=request.form['ppbs']
+        username=session.get('username')
+        dbHandler.insertsugar(username,fbs,ppbs)
+        return render_template('testreports.html')   
+    if select=='bloodtest':
+        rbc=request.form['rbc']
+        wbc=request.form['wbc']
+        tc=request.form['TC']
+        neutro=request.form['neutro']
+        limph=request.form['limph']
+        eucino=request.form['eucino']
+        monocite=request.form['monocite']
+        platelet=request.form['platelet']
+        username=session.get('username')
+        dbHandler.insertbloodtest(username,rbc,wbc,tc,neutro,limph,eucino,monocite,platelet)
+        return render_template('testreports.html')  
+      
+ else:
+   return render_template('testreports.html')
 
 
 @app.route("/speech")
@@ -61,6 +101,8 @@ def speech():
     	    if noun[i] == word :
     		  f.write(noun[i]+'\n')
     session['chatlist']=chatlist
+    count=5
+    session['count']=5
     return redirect(url_for('prediction'))
  except sr.UnknownValueError:
     print("Google Speech Recognition could not understand audio")
@@ -70,14 +112,20 @@ def speech():
 
 @app.route("/prediction",methods=['POST','GET'])
 def prediction():
+    chatlist=session.get('chatlist')
+    count=session.get('count')
     if request.method=='POST':
        message=request.form['message']
-       symlist=message.split(',')
-       data = []
-       with open('medterm.txt','a') as myfile:
-            for symptom in symlist:
-                myfile.write(symptom + "\n")
-       with open('medterm.txt','r') as myfile:
+       #symlist=message.split(',')
+       chatlist.append(['user',message])
+       if message=='yes':     
+        count=count-1 
+        symptom = session.get('sym')
+        
+        data = []
+        with open('medterm.txt','a') as myfile:
+            myfile.write(symptom + "\n")
+        with open('medterm.txt','r') as myfile:
             for i in myfile.readlines():
                 data.append(i)
     diseases = []
@@ -111,18 +159,21 @@ def prediction():
     items.reverse()
     items = [(k, v) for v, k in items] 
     print items
-    chatlist=session.get('chatlist')
-    if request.method=='POST':
+    
+    if count==0:
+        count=count-1
         output=[list(items[0]),list(items[1]),list(items[2])]
-        outitem=['sys','you might have']
+        outitem=['sys','You have a high chance of '+output[0][0]+'\n'+'other probable diseases are '+output[1][0] +','+ output[2][0]]
         chatlist.append(outitem)
-        outitem=['sys',output[0][0]]
-        chatlist.append(outitem)
-        outitem=['sys',output[1][0]]
-        chatlist.append(outitem)
-        outitem=['sys',output[2][0]]
-        chatlist.append(outitem)
+        session['disease']=[output[0][0],output[1][0],output[2][0]]
+        username=session.get('username')
+        dbHandler.insertdisease(username,output[0][0])
+        dbHandler.insertdisease(username,output[1][0])
+        dbHandler.insertdisease(username,output[2][0])
+        return render_template('chat.html',chatlist=chatlist,username=username)
+        
     import random 
+    sym=[]
     for (dis,v) in items[:5]:
      dislist=[]
      diseaselist=[]
@@ -130,15 +181,20 @@ def prediction():
          for row in csvfile:
             dislist.append(row)
          diseaselist=list(set(dislist)-set(data))
-         #print diseaselist
-         sym=[]   
+         #print diseaselist   
          for i in range(3):
           secure_random = random.SystemRandom()
           sym.append(secure_random.choice(diseaselist))
             
-         chatlist.append(['sys',"Do you have ?\n" + sym[0] + sym[1] + sym[2]])
-         session['chatlist']=chatlist
-         return render_template('chat.html',chatlist=chatlist)
+    srandom = random.randint(0,14) 
+    print srandom
+    print sym   
+    chatlist.append(['sys',"Do you have ?\n" + sym[srandom]])
+    session['sym']=sym[srandom]
+    session['chatlist']=chatlist
+    session['count']=count
+    username=session.get('username')
+    return render_template('chat.html',chatlist=chatlist,username=username)
     
         
          
@@ -148,16 +204,19 @@ def prediction():
 
 @app.route("/register",methods=['POST','GET'])
 def register():
-	if request.method=='POST':
-   		username = request.form['username']
-   		password1 = request.form['password']
-        password2=request.form['pass']
-        email=request.form['email']
-        if password1==password2:
-            dbHandler.insertUser(username, password1,email)
+   if request.method=='POST':
+       username = request.form['username']
+       password1 = request.form['password']
+       password2=request.form['pass']
+       email=request.form['email']
+       phone=request.form['phone']
+       age=request.form['age']
+       if password1==password2:
+            dbHandler.insertUser(username, password1,email,phone,age)
             return render_template('index.html')                                                        
-   	else:
-   		return render_template('register.html')
+   else:
+       print "register"
+       return render_template('register.html')
 
 
 
@@ -181,13 +240,20 @@ def login():
         else:
             print"wrong pass"
             flash('wrong password!')
-        return home()
+        return redirect(url_for('testreports'))
  else:
         return render_template('index.html')
 @app.route("/logout")
 def logout():
-	session.pop('logged_in',None)
-	session.pop('username',None)
+    session.pop('logged_in',None)
+    session.pop('username',None)
+    return redirect(url_for('login'))
+
+@app.before_request
+def make_session_permanent():
+    session.permanent=True
+    app.permanent_session_lifetime=timedelta(minutes=30)
+    
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
     app.run(port=8000,debug = True)

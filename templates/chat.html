@@ -19,7 +19,7 @@
     <div id="profile">
       <div class="wrap">
         <img id="profile-img" src="{{url_for('static', filename='images/person.png')}}" class="online" alt="" />
-        <p>Mike Ross</p>
+        <p>{{username}}</p>
         <div id="status-options">
           <ul>
             <li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
@@ -67,18 +67,22 @@
     </div>
     <div class="messages" style="background:grey;">
       <ul>
- 	{%set i=0%}
+ 	
         {%for lis in chatlist%}
+           {%if lis[0]=='sysm'%}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">{%print lis[1]%}</p>
+             
+               <a href="speech"><button  type="button">Speak</button></a>
+             
+             {%endif%}
            {%if lis[0]=='sys'%}
              <li class="replies" style="color:blue;text-align:left;">
              <p style="float:left">{%print lis[1]%}</p>
-             {%if i==0%}
-	       <br><br>
-               <a href="speech"><button  type="button">Speak</button></a>
-               {%set i=i+1%} 
+               
+              
              {%endif%}
-           
-           {%elif lis[0]=='user'%}
+           {%if lis[0]=='user'%}
              <li class="sent" style="color:black;text-align:right;">
 	     <p style="float:right;color:black;">{%print lis[1]%}</p>
            
