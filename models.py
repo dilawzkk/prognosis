@@ -8,17 +8,47 @@ def insertUser(username,password,email,phone,age):
     con.close()
 
 def retrieveUsers():
-	con = sql.connect("prognosisdb.db")
-	cur = con.cursor()
-	cur.execute("SELECT username, password FROM users")
-	users = cur.fetchall()
-	con.close()
-	return users
+    con = sql.connect("prognosisdb.db")
+    cur = con.cursor()
+    cur.execute("SELECT username, password FROM users")
+    users = cur.fetchall()
+    con.commit()
+    con.close()
+    return users
+
+def predic_correct(disid):
+    con = sql.connect("prognosisdb.db")
+    cur = con.cursor()
+    valid="valid"
+    cur.execute("UPDATE diseases SET status=? WHERE id=? ",(valid, disid))
+    print "updated........................................"
+    user = cur.fetchall()
+    con.commit()
+    con.close()
+    return user
+
 def userdetail(username):
     con = sql.connect("prognosisdb.db")
     cur = con.cursor()
     cur.execute("SELECT username, password FROM users WHERE username=%02s")%username
     user = cur.fetchall()
+    con.commit()
+    con.close()
+    return user
+def useralldetail(username):
+    con = sql.connect("prognosisdb.db")
+    cur = con.cursor()
+    cur.execute("SELECT * FROM users WHERE username=\'"+username+"\'")
+    user = cur.fetchall()
+    con.commit()
+    con.close()
+    return user
+def disdetails(username):
+    con = sql.connect("prognosisdb.db")
+    cur = con.cursor()
+    cur.execute("SELECT * FROM diseases WHERE username=\'"+username+"\'")
+    user = cur.fetchall()
+    con.commit()
     con.close()
     return user
 def insertdisease(username,disease):

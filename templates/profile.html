@@ -1,0 +1,388 @@
+
+<!DOCTYPE html><html class=''>
+<title>Prognosis</title>
+<head><script src="{{url_for('static', filename='//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js')}}"></script><script src="{{url_for('static', filename='//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js')}}"></script><script src="{{url_for('static', filename='//production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js')}}"></script><meta charset='UTF-8'><meta name="robots" content="noindex"><link rel="shortcut icon" type="image/x-icon" href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" /><link rel="mask-icon" type="" href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" /><link rel="canonical" href="https://codepen.io/emilcarlsson/pen/ZOQZaV?limit=all&page=74&q=contact+" />
+<link href="{{url_for('static', filename='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300')}}" rel='stylesheet' type='text/css'>
+
+<script src="{{url_for('static', filename='https://use.typekit.net/hoy3lrg.js')}}"></script>
+<script>try{Typekit.load({ async: true });}catch(e){}</script>
+<link rel='stylesheet prefetch' href="{{url_for('static', filename='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css')}}"><link rel='stylesheet prefetch' href="{{url_for('static', filename='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style2.css')}}">
+<style class="cp-pen-styles">
+</style>
+</head>
+
+<body>
+
+<div id="frame">
+  <div id="sidepanel">
+    <div id="profile">
+      <div class="wrap">
+        <img id="profile-img" src="{{url_for('static', filename='images/person.png')}}" class="online" alt="" />
+        <p>{{userdata[1]}}</p>
+        <div id="status-options">
+          <ul>
+            <li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="search">
+      <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+      <input type="text" placeholder="Patient History..." >
+    </div>
+    <div id="contacts">
+      <ul>
+        <li class="contact">
+          <div class="wrap">
+            <div class="meta">
+              <a class="link" href="#">Profile</a>
+            </div>
+          </div>
+        </li>
+        <li class="contact">
+          <div class="wrap">
+            <div class="meta">
+              <a class="link" href="/testreports">Personel Assessment</a>
+            </div>
+          </div>
+        </li>
+        <li class="contact">
+          <div class="wrap">
+            <div class="meta">
+              <a class="link" href="/logout">Logout</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="content">
+    <div class="contact-profile">
+      <div style="float:left">
+      <img src="{{url_for('static', filename='images/steth.png')}}"  />
+      </div>
+      <div style="float:left">PROGNOSIS</div>
+    </div>
+    <div class="mesages">
+	  <div style="background:grey;margin:5px;">
+		<div style="float:left;color:black;">ABOUT</div>
+	     <br>
+	      <ul>
+		{%if not (userdata[1])==None%}
+			<li class="replies" style="color:white;text-align:left;margin:0px;">
+                        <p style="float:left;margin:0px;">USERNAME  :  {{userdata[1]}}</p>
+		{%endif%}
+		{%if not (userdata[3])==NULL%}
+			<li class="replies" style="color:white;text-align:left;margin:0px;">
+                        <p style="float:left;margin:0px;">EMAIL  :  {{userdata[3]}}</p>
+		{%endif%}
+		{%if not (userdata[4])==None%}
+			<li class="replies" style="color:white;text-align:left;margin:0px;">
+                        <p style="float:left;margin:0px;">CONTACT :  {{userdata[4]}}</p>
+		{%endif%}
+		   
+	  </div>
+	
+
+    
+         <div style="background:grey;margin:5px;">
+           <div style="float:left;color:black;text-align:center;">Your Health Status</div>
+		<br>
+           {%if not (userdata[6]== None and userdata[7]== None) %}
+            {%if userdata[6] <= 90 and userdata[7] <= 60 %}
+		
+                 <li class="replies" style="color:white;text-align:left;margin:0px;">
+                 <p style="float:left;margin:0px;">Blood Pressure  : low bp</p>
+             
+            
+              
+               {%elif userdata[6] <= 120 and userdata[7] <= 80 %}
+             <li class="replies" style="color:white;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Blood Pressure  : NORMAL </p>
+
+               {%elif userdata[6] <= 140 and userdata[7] <= 90 %}
+             <li class="replies" style="color:white;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Blood Pressure  :  pre high </p>
+
+               {%else %}
+             <li class="replies" style="color:white;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Blood Pressure  : high </p>
+            
+              {%endif%}
+             {%endif%}
+            {%if not (userdata[8]== None and userdata[9]== None) %}
+            {%if userdata[8] < 108 and userdata[9] < 140 %}
+             <li class="replies" style="color:white;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Sugar           :  NORMAL</p>
+             
+            
+              
+               {%elif userdata[8] <= 125 and userdata[9] <= 199 %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Sugar Level     : PRE-DIABETIC</p>
+
+               {%else %}
+             <li class="replies" style="color:white;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Sugar Level     : HIGH</p>
+            
+              {%endif%}
+             {%endif%}
+
+            {%if not (userdata[10]== None) %}
+            {%if userdata[10] < 4.7 %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Low RBC count</p>
+             
+            
+              
+               {%elif userdata[10] <= 6.1 %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Normal RBC count</p>
+
+               {%else %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">High RBC count</p>
+            
+              {%endif%}
+             {%endif%}
+
+            {%if not (userdata[11]== None) %}
+            {%if userdata[11] < 4.5 %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Low WBC count</p>
+             
+            
+              
+               {%elif userdata[11] <= 11 %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Normal WBC count</p>
+
+               {%else %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">High WBC count</p>
+            
+              {%endif%}
+             {%endif%}
+
+            {%if not (userdata[12]== None) %}
+            {%if userdata[12] < 4.7 %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Low RBC count</p>
+             
+            
+              
+               {%elif userdata[12] <= 6.1 %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Normal RBC count</p>
+
+               {%else %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">High RBC count</p>
+            
+              {%endif%}
+            {%endif%}
+
+            {%if not (userdata[13]== None) %}
+            {%if userdata[13] < 50 %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Low neutrophilis</p>
+             
+            
+              
+               {%elif userdata[13] <= 81 %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Normal neutrophilis</p>
+
+               {%else %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">High neutrophilis</p>
+            
+              {%endif%}
+             {%endif%}
+
+            {%if not (userdata[14]== None) %}
+            {%if userdata[14] < 14 %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Low Lymphocytes</p>
+             
+            
+              
+               {%elif userdata[14] <= 44 %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Normal Lymphocytes</p>
+
+               {%else %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">High Lymphocytes</p>
+            
+              {%endif%}
+             {%endif%}
+            {%if not (userdata[15]== None) %}
+            {%if userdata[15] < 1 %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Low eucinophil</p>
+             
+            
+              
+               {%elif userdata[15] <= 5 %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Normal eucinophilis</p>
+
+               {%else %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">High eucinophilis</p>
+            
+              {%endif%}
+             {%endif%}
+
+            {%if not (userdata[16]== None) %}
+            {%if userdata[16] < 2 %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Low monocite </p>
+             
+            
+              
+               {%elif userdata[16] <= 6 %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Normal monocite </p>
+
+               {%else %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">High monocite </p>
+            
+              {%endif%}
+             {%endif%}
+
+            {%if not (userdata[17]== None) %}
+            {%if userdata[13] < 50 %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Low neutrophilis</p>
+             
+            
+              
+               {%elif userdata[17] <= 81 %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">Normal neutrophilis</p>
+
+               {%else %}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">High neutrophilis</p>
+            
+              {%endif%}
+             {%endif%}
+    </div>
+        
+    <div style="background:grey;margin:5px;">
+        {%for lis in disdata%}
+         
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+               {%if lis[2] =='invalid' %}
+             <p style="float:left;margin:0px;color:yellow">{%print lis[1]%}</p>
+               <a href="correctprediction/{%print lis[3]%}"><button  type="button">correct prediction</button></a>
+                <a href="wrongprediction/{%print lis[3]%}"><button  type="button">wrong prediction</button></a>                
+                <a href= "cured/{%print lis[3]%}"><button  type="button">cured</button></a>
+                {%elif lis[2] == 'valid' %}
+             <p style="float:left;margin: 0px;color:red">{%print lis[1]%}</p>
+                <a href= "cured/{%print lis[3]%}"><button  type="button">cured</button></a>
+
+                {%elif lis[2] == 'cured' %}
+             <p style="float:left;margin:0px;color:green">{%print lis[1]%}</p>
+                {%endif%}
+              
+             
+             
+            
+	{%endfor%}
+    </div>
+    </div>
+    </div>
+      <!--<ul>
+ 	
+        {%for lis in chatlist%}
+           {%if lis[0]=='sysm'%}
+             <li class="replies" style="color:blue;text-align:left;margin:0px;">
+             <p style="float:left;margin:0px;">{%print lis[1]%}</p>
+             
+               <a href="speech"><button  type="button">Speak</button></a>
+             
+             {%endif%}
+           {%if lis[0]=='sys'%}
+             <li class="replies" style="color:blue;text-align:left;">
+             <p style="float:left">{%print lis[1]%}</p>
+               
+              
+             {%endif%}
+           {%if lis[0]=='user'%}
+             <li class="sent" style="color:black;text-align:right;">
+	     <p style="float:right;color:black;">{%print lis[1]%}</p>
+           
+           {%endif%}
+	{%endfor%}
+           
+       
+          
+      </ul>-->
+    
+    </div>
+  </div>
+</div>
+<script src="{{url_for('static', filename='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js')}}"></script><script src="{{url_for('static', filename='https://code.jquery.com/jquery-2.2.4.min.js')}}"></script>
+<script >$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+
+$("#profile-img").click(function() {
+  $("#status-options").toggleClass("active");
+});
+
+$(".expand-button").click(function() {
+  $("#profile").toggleClass("expanded");
+  $("#contacts").toggleClass("expanded");
+});
+
+$("#status-options ul li").click(function() {
+  $("#profile-img").removeClass();
+  $("#status-online").removeClass("active");
+  $("#status-away").removeClass("active");
+  $("#status-busy").removeClass("active");
+  $("#status-offline").removeClass("active");
+  $(this).addClass("active");
+  
+  if($("#status-online").hasClass("active")) {
+    $("#profile-img").addClass("online");
+  } else if ($("#status-away").hasClass("active")) {
+    $("#profile-img").addClass("away");
+  } else if ($("#status-busy").hasClass("active")) {
+    $("#profile-img").addClass("busy");
+  } else if ($("#status-offline").hasClass("active")) {
+    $("#profile-img").addClass("offline");
+  } else {
+    $("#profile-img").removeClass();
+  };
+  
+  $("#status-options").removeClass("active");
+});
+
+function newMessage() {
+  message = $(".message-input input").val();
+  if($.trim(message) == '') {
+    return false;
+  }
+  $('<li class="sent"><img src="{{url_for('static', filename='http://emilcarlsson.se/assets/mikeross.png')}}" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
+  $('.message-input input').val(null);
+  $('.contact.active .preview').html('<span>You: </span>' + message);
+  $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+};
+
+$('.submit').click(function() {
+  newMessage();
+});
+
+$(window).on('keydown', function(e) {
+  if (e.which == 13) {
+    newMessage();
+    return false;
+  }
+});
+//# sourceURL=pen.js
+</script>
+</body></html>

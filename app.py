@@ -28,6 +28,34 @@ def chat():
  username=session.get('username')
  return render_template('chat.html',chatlist=chatlist,username=username)
 
+@app.route("/correctprediction/<int:disid>")
+def correctprediction(disid):
+    dbHandler.predic_correct(disid)
+    return redirect(url_for('profile'))
+
+@app.route("/cured/<int:disid>")
+def cured(disid)
+    dbHandler.cure(disid)
+    return redirect(url_for('profile'))
+
+@app.route("/profile",methods=['POST','GET'])
+def profile():
+    username=session.get('username')
+    userdata=dbHandler.useralldetail(username)
+    disdata=dbHandler.disdetails(username)
+    print username
+    print userdata
+    print disdata
+    userdata=list(userdata[0])
+    if not (userdata[6]==None and userdata[7]==None):
+        print "not availabe"
+    else:
+        print userdata[3]
+    if userdata[7]==None:
+        print "not availabe"
+    else:
+        print userdata[7]
+    return render_template('profile.html',userdata=userdata,disdata=disdata)
 
 @app.route("/testreports",methods=['POST','GET'])
 def testreports():
@@ -240,7 +268,7 @@ def login():
         else:
             print"wrong pass"
             flash('wrong password!')
-        return redirect(url_for('testreports'))
+        return home()
  else:
         return render_template('index.html')
 @app.route("/logout")
